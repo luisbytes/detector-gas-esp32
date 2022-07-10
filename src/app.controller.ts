@@ -7,10 +7,18 @@ export class AppController {
     private readonly appService: AppService
   ) { }
 
-  @Get(':value')
-  async addData(
+  @Get('/start/:value')
+  async startDrain(
     @Param('value') value: number
   ): Promise<void> {
-    return await this.appService.addData(value);
+    return await this.appService.startDrain(value);
+  }
+
+  @Get('/end/:value/:time')
+  async endDrain(
+    @Param('value') value: number,
+    @Param('time') time: number,
+  ): Promise<void> {
+    return await this.appService.endDrain(value, time);
   }
 }
