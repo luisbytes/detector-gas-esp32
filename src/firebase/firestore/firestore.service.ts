@@ -6,7 +6,7 @@ export class FirestoreService {
     private firestore = firestore();
 
     async getLast(path: string) {
-        const ref = this.firestore.collection(path).orderBy('startDate', 'desc').limitToLast(1);
+        const ref = this.firestore.collection(path).orderBy('startDate', 'asc').limitToLast(1);
         const last = await ref.get();
         const doc = last.docs.map(doc => {
             return doc;
