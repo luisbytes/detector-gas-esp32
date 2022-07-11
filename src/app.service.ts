@@ -16,7 +16,7 @@ export class AppService {
 
     return await this.realtimeDatabaseService.add('/tracing', {
       startDate: date,
-      startValue: value
+      value
     })
   }
 
@@ -24,14 +24,13 @@ export class AppService {
     value: number,
     time: number
   ): Promise<void> {
-    // const date = moment().utc()
     const last = await this.realtimeDatabaseService.getLast('tracing');
     const data = last.val();
     const date = moment(data.startDate).add(time, 'second').utc().toString();
 
     last.ref.update({
       endingDate: date,
-      endingValue: value
+      value
     });
 
   }

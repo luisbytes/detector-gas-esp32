@@ -12,7 +12,7 @@ export class RealtimeDatabaseService {
         const json = last.toJSON();
         const key = Object.keys(json)[0];
 
-        return await this.db.ref(`${path}/${key}`).get();
+        return this.db.ref(`${path}/${key}`).get();
     }
 
     async add(path: string, data: any) {
