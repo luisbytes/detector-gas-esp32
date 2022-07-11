@@ -45,11 +45,11 @@ export class AppService {
   }
 
   private getStatus(value: number) {
-    if (value <= 1000 && value > 5000) {
+    if (value >= 1000 && value < 5000) {
       return 0
-    } else if (value <= 5000 && value > 7000) {
+    } else if (value >= 5000 && value < 7000) {
       return 1;
-    } else if (value <= 7000) {
+    } else if (value >= 7000) {
       return 2;
     }
   }
