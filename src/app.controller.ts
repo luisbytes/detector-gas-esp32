@@ -14,6 +14,13 @@ export class AppController {
     return await this.appService.startDrain(value);
   }
 
+  @Get('/status/:value')
+  async statusDrain(
+    @Param('value') value: number
+  ) {
+    return await this.appService.statusDrain(value);
+  }
+
   @Get('/end/:value/:time')
   async endDrain(
     @Param('value') value: number,

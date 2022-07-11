@@ -20,6 +20,16 @@ export class AppService {
     })
   }
 
+  async statusDrain(
+    value: number
+  ): Promise<void> {
+    const last = await this.realtimeDatabaseService.getLast('tracing');
+
+    await last.ref.update({
+      value
+    })
+  }
+
   async endDrain(
     value: number,
     time: number
@@ -28,7 +38,7 @@ export class AppService {
     const data = last.val();
     const date = moment(data.startDate).add(time, 'second').utc().toString();
 
-    last.ref.update({
+    await last.ref.update({
       endingDate: date,
       value
     });
