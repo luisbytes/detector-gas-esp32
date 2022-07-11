@@ -16,7 +16,7 @@ export class AppService {
 
     return await this.firestoreService.add('/tracing', {
       startDate: date,
-      value
+      value: this.getStatus(value)
     })
   }
 
@@ -26,7 +26,7 @@ export class AppService {
     const last = await this.firestoreService.getLast('tracing');
 
     await last.ref.update({
-      value
+      value: this.getStatus(value)
     })
   }
 
@@ -40,7 +40,17 @@ export class AppService {
 
     await last.ref.update({
       endingDate: date,
-      value
+      value: this.getStatus(value)
     });
+  }
+
+  private getStatus(value: number) {
+    if (value <= 1000 && value > 5000) {
+      return 0
+    } else if (value <= 5000 && value > 7000) {
+      return 1;
+    } else if (value <= 7000) {
+      return 2;
+    }
   }
 }
