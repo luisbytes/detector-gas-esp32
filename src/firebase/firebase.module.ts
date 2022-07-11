@@ -1,13 +1,18 @@
 import { Global, Module } from '@nestjs/common';
 import admin from 'firebase-admin';
-
-import { RealtimeDatabaseService } from './realtime-database/realtime-database.service';
 import { CloudMessagingService } from './cloud-messaging/cloud-messaging.service';
+import { FirestoreService } from './firestore/firestore.service';
 
 @Global()
 @Module({
-  providers: [RealtimeDatabaseService, CloudMessagingService],
-  exports: [RealtimeDatabaseService, CloudMessagingService]
+  providers: [
+    CloudMessagingService,
+    FirestoreService
+  ],
+  exports: [
+    CloudMessagingService,
+    FirestoreService
+  ]
 })
 export class FirebaseModule {
   constructor() {
