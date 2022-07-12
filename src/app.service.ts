@@ -53,8 +53,7 @@ export class AppService {
     const date = moment(data.startDate).add(time, 'second').utc().toString();
 
     await last.ref.update({
-      endingDate: date,
-      value: this.getStatus(value)
+      endingDate: date
     });
   }
 
