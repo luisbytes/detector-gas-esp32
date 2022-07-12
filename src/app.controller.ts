@@ -8,11 +8,6 @@ export class AppController {
     private readonly appService: AppService,
   ) { }
 
-  @Get('/')
-  hello() {
-    return 'By Legalmente.Dev'
-  }
-
   @Get('/start/:value')
   async startDrain(
     @Param('value') value: number
