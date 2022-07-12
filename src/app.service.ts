@@ -18,7 +18,7 @@ export class AppService {
     await this.cloudMessagingService.sendNotifications({
       android: {
         notification: {
-          title: 'Se esta presentando una fuga',
+          title: 'Se esta presentando una fuga!',
           body: 'Nivel: ' + this.getStatus(value)
         },
       },
