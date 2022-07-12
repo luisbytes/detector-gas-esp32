@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import * as moment from 'moment';
+
 import { FirestoreService } from './firebase';
 import { CloudMessagingService } from './firebase/cloud-messaging/cloud-messaging.service';
+
+import moment from 'moment';
 
 @Injectable()
 export class AppService {
 
   constructor(
     private readonly firestoreService: FirestoreService,
-    private readonly cloudMessagingService: CloudMessagingService
+    private readonly cloudMessagingService: CloudMessagingService,
   ) { }
 
   async startDrain(
