@@ -1,11 +1,17 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CloudMessagingService } from './firebase/cloud-messaging/cloud-messaging.service';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService
+    private readonly appService: AppService,
   ) { }
+
+  @Get()
+  hello() {
+    return 'By Legalmente.Dev'
+  }
 
   @Get('/start/:value')
   async startDrain(

@@ -1,23 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
 import { FirestoreService } from './firebase';
+import { CloudMessagingService } from './firebase/cloud-messaging/cloud-messaging.service';
 
 @Injectable()
 export class AppService {
 
   constructor(
     private readonly firestoreService: FirestoreService,
+    private readonly cloudMessagingService: CloudMessagingService
   ) { }
 
   async startDrain(
     value: number
   ): Promise<void> {
     const date = moment().utc().toString();
+    await this.cloudMessagingService.sendNotifications({
+      android: {
+        notification: {
+          title: 'Se esta presentando una fuga',
+          body: 'Nivel: ' + this.getStatus(value)
+        },
+      },
+      topic: 'all'
+    });
+
 
     return await this.firestoreService.add('/tracing', {
       startDate: date,
       value: this.getStatus(value)
-    })
+    });
+
   }
 
   async statusDrain(
