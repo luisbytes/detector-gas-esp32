@@ -14,19 +14,20 @@ export class AppService {
   async startDrain(
     value: number
   ): Promise<void> {
+    const status = this.getStatus(value);
     const date = moment().utc().toString();
     await this.cloudMessagingService.sendNotifications({
       android: {
         notification: {
           title: 'Se esta presentando una fuga!',
-          body: 'Nivel: ' + this.getStatus(value)
+          body: 'Nivel: ' + this.getStatusText(status)
         },
       },
       topic: 'all'
     });
 
 
-    return await this.firestoreService.add('/tracing', {
+    await this.firestoreService.add('/tracing', {
       startDate: date,
       value: this.getStatus(value)
     });
@@ -64,6 +65,16 @@ export class AppService {
       return 1;
     } else if (value >= 7000) {
       return 2;
+    }
+  }
+
+  private getStatusText(status: number) {
+    if (status == 0) {
+      return 'Bajo';
+    } else if (status == 1) {
+      return 'Medio';
+    } else if (status == 2) {
+      return 'Alto';
     }
   }
 }

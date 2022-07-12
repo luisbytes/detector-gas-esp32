@@ -8,7 +8,7 @@ export class AppController {
     private readonly appService: AppService,
   ) { }
 
-  @Get()
+  @Get('/')
   hello() {
     return 'By Legalmente.Dev'
   }
