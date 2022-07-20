@@ -17,7 +17,7 @@ export class AppService {
     value: number
   ): Promise<void> {
     const status = this.getStatus(value);
-    const date = moment().utc().toString();
+    const date = moment().utc().valueOf();
     await this.cloudMessagingService.sendNotifications({
       android: {
         notification: {
@@ -52,7 +52,7 @@ export class AppService {
   ): Promise<void> {
     const last = await this.firestoreService.getLast('tracing');
     const data = last.data();
-    const date = moment(data.startDate).add(time, 'second').utc().toString();
+    const date = moment(data.startDate).add(time, 'second').utc().valueOf()
 
     await last.ref.update({
       endingDate: date
