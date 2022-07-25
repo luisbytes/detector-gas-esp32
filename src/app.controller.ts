@@ -17,6 +17,7 @@ export class AppController {
   async startDrain(
     @Param('value') value: number
   ): Promise<void> {
+    console.log(value);
     return await this.appService.startDrain(value);
   }
 
@@ -24,6 +25,7 @@ export class AppController {
   async statusDrain(
     @Param('value') value: number
   ) {
+    console.log(value);
     return await this.appService.statusDrain(value);
   }
 
