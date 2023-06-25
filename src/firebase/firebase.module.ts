@@ -5,14 +5,8 @@ import { FirestoreService } from './firestore/firestore.service';
 
 @Global()
 @Module({
-  providers: [
-    CloudMessagingService,
-    FirestoreService
-  ],
-  exports: [
-    CloudMessagingService,
-    FirestoreService
-  ]
+  providers: [CloudMessagingService, FirestoreService],
+  exports: [CloudMessagingService, FirestoreService],
 })
 export class FirebaseModule {
   constructor() {
@@ -22,7 +16,7 @@ export class FirebaseModule {
         privateKey: process.env.FIREBASE_KEY.replace(/\\n/g, '\n'),
         clientEmail: process.env.FIREBASE_EMAIL,
       }),
-      databaseURL: process.env.FIREBASE_DATABASE
+      databaseURL: process.env.FIREBASE_DATABASE,
     });
   }
 }

@@ -11,11 +11,9 @@ import { FirebaseModule } from './firebase/firebase.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    FirebaseModule
+    FirebaseModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService
-  ],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
