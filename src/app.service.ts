@@ -7,61 +7,63 @@ import moment from 'moment';
 
 @Injectable()
 export class AppService {
-
   constructor(
     private readonly firestoreService: FirestoreService,
     private readonly cloudMessagingService: CloudMessagingService,
   ) { }
 
-  async startDrain(
-    value: number
-  ): Promise<void> {
+  async startDrain(value: number): Promise<void> {
     const status = this.getStatus(value);
     const date = moment().utc().valueOf();
     await this.cloudMessagingService.sendNotifications({
       android: {
         notification: {
           title: 'Se esta presentando una fuga!',
-          body: 'Nivel: ' + this.getStatusText(status)
+          body: 'Nivel: ' + this.getStatusText(status),
         },
       },
-      topic: 'all'
+      topic: 'all',
     });
-
 
     await this.firestoreService.add('/tracing', {
       startDate: date,
-      value: this.getStatus(value)
+      value: this.getStatus(value),
     });
-
   }
 
-  async statusDrain(
-    value: number
-  ): Promise<void> {
+  async statusDrain(value: number): Promise<void> {
     const last = await this.firestoreService.getLast('tracing');
 
     await last.ref.update({
-      value: this.getStatus(value)
-    })
+      value: this.getStatus(value),
+    });
   }
 
-  async endDrain(
-    value: number,
-    time: number
-  ): Promise<void> {
+  async endDrain(value: number, time: number): Promise<void> {
     const last = await this.firestoreService.getLast('tracing');
     const data = last.data();
-    const date = moment(data.startDate).add(time, 'second').utc().valueOf()
+    const date = moment(data.startDate).add(time, 'second').utc().valueOf();
 
     await last.ref.update({
-      endingDate: date
+      value,
+      endingDate: date,
+    });
+
+    const status = this.getStatus(value);
+    await this.cloudMessagingService.sendNotifications({
+      android: {
+        notification: {
+          title: 'La fuga ha terminado!',
+          body: 'Último nivel registrado: ' + this.getStatusText(status),
+        },
+      },
+      topic: 'all',
     });
   }
 
   private getStatus(value: number) {
     if (value >= 0 && value < 1000) {
-      return 0
+      return 0;
     } else if (value >= 1000 && value < 5000) {
       return 1;
     } else if (value >= 5000) {

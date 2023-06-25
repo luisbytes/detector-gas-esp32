@@ -3,19 +3,22 @@ import { firestore } from 'firebase-admin';
 
 @Injectable()
 export class FirestoreService {
-    private firestore = firestore();
+  private firestore = firestore();
 
-    async getLast(path: string) {
-        const ref = this.firestore.collection(path).orderBy('startDate', 'asc').limitToLast(1);
-        const last = await ref.get();
-        const doc = last.docs.map(doc => {
-            return doc;
-        })[0];
+  async getLast(path: string) {
+    const ref = this.firestore
+      .collection(path)
+      .orderBy('startDate', 'asc')
+      .limitToLast(1);
+    const last = await ref.get();
+    const doc = last.docs.map((doc) => {
+      return doc;
+    })[0];
 
-        return doc;
-    }
+    return doc;
+  }
 
-    async add(path: string, data: any) {
-        await this.firestore.collection(path).add(data)
-    }
+  async add(path: string, data: any) {
+    await this.firestore.collection(path).add(data);
+  }
 }
